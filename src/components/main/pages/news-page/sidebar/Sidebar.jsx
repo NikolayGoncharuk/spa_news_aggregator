@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 // Components
 import Search from './search/Search';
 import Date from './date/Date';
@@ -8,22 +8,25 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: '32px',
   },
-  sidebarWidget: {
+}));
+
+const Widget = withStyles(theme => ({
+  root: {
     paddingBottom: '48px',
   },
-}));
+}))(props => <div {...props} />);
 
 export default function Sidebar() {
   const classes = useStyles();
 
   return (
     <aside className={classes.root}>
-      <div className={classes.sidebarWidget}>
+      <Widget>
         <Search />
-      </div>
-      <div className={classes.sidebarWidget}>
+      </Widget>
+      <Widget>
         <Date />
-      </div>
+      </Widget>
     </aside >
   );
 };

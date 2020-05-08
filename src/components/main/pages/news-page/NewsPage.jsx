@@ -5,6 +5,7 @@ import { getNewsResponse } from '../../../../model/reducers/newsReducer';
 import Grid from '@material-ui/core/Grid';
 //Components
 import Articles from './articles/Articles';
+import ProgressButton from './progress-button/ProgressButton';
 import Sidebar from './sidebar/Sidebar';
 
 const mapStateToProps = (state) => ({
@@ -27,6 +28,7 @@ export default connect(mapStateToProps, { getNewsResponse })(
             loading={loading}
             newsResponse={props.newsResponse}
           />
+          <ProgressButton />
         </Grid>
         <Grid item xs={3}>
           <Sidebar />

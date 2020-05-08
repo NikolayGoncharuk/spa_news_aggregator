@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: '40px',
     paddingBottom: '40px',
   },
-  copyrights: {
+  copyright: {
     paddingTop: '12px',
     paddingBottom: '12px',
     textAlign: 'center',
@@ -72,7 +72,7 @@ export default function Footer() {
                 <ContactItem
                   icon={<MapIcon />}
                   primary="Адрес:"
-                  secondary="г. Хабаровск, ул. Шимановская, 10"
+                  secondary="г. Хабаровск, ул. Шимановская"
                 />
                 <Divider variant="inset" component="li" />
                 <ContactItem
@@ -91,7 +91,7 @@ export default function Footer() {
           </Grid>
         </Container>
       </Paper>
-      <Container maxWidth={false} className={classes.copyrights}>
+      <Container maxWidth={false} className={classes.copyright}>
         <Typography>Все права защищены, незаконное использование интеллектуальной собственности карается <strong>смертной казнью</strong></Typography>
       </Container>
     </React.Fragment >

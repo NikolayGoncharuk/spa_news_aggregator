@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   datePicker: {
     marginTop: '16px',
   },
-  buttonsWrapper: {
+  buttonsContainer: {
     marginTop: '16px',
   },
 }));
@@ -27,7 +27,7 @@ export default function Date() {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker className={classes.datePicker} />
       </MuiPickersUtilsProvider>
-      <Grid container spacing={3} className={classes.buttonsWrapper}>
+      <Grid container spacing={3} className={classes.buttonsContainer}>
         <Grid item>
           <Button>Показать</Button>
         </Grid>
