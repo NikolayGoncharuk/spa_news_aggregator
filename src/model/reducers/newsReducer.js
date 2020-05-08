@@ -34,6 +34,16 @@ const setNewsResponse = (data) => ({
 
 export const getNewsResponse = (setLoading) => async (dispatch) => {
   const data = await newsAPI.getNewsResponse();
+
+  data.articles.forEach((item) => {
+    let date = new Date(Date.parse(item.publishedAt));
+    item.publishedAt = date.toLocaleString('ru', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  });
+
   dispatch(setNewsResponse(data));
   setLoading();
 };
