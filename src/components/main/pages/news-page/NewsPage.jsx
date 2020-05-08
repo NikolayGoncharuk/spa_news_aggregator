@@ -1,18 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getNews } from '../../../../model/reducers/newsReducer';
+import { getNewsResponse } from '../../../../model/reducers/newsReducer';
 //Components
 import Articles from './articles/Articles';
 
-export default connect(null, { getNews })(
+const mapStateToProps = (state) => ({
+  newsResponse: state.news.newsResponse,
+});
+
+export default connect(mapStateToProps, { getNewsResponse })(
   function NewsPage(props) {
 
     React.useEffect(() => {
-      props.getNews();
+      props.getNewsResponse();
     });
 
     return (
-      <Articles />
+      <div>
+        {props.newsResponse.articles && (<Articles newsResponse={props.newsResponse} />)}
+      </div>
     );
   }
 );

@@ -6,7 +6,7 @@ const language = 'ru';
 const apiKey = 'd88047b435d14b96b9b1b5e9f16920de';
 
 export const newsAPI = {
-  async getNews() {
+  async getNewsResponse() {
     const response = await axios.get(`/everything?sources=${sources}&language=${language}&apiKey=${apiKey}`);
     return response.data;
   },
