@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getNewsResponse } from '../../../../model/reducers/newsReducer';
+// Styled Components
+import Grid from '@material-ui/core/Grid';
 //Components
 import Articles from './articles/Articles';
+import Sidebar from './sidebar/Sidebar';
 
 const mapStateToProps = (state) => ({
   newsResponse: state.news.newsResponse,
@@ -18,12 +21,17 @@ export default connect(mapStateToProps, { getNewsResponse })(
     }, []);
 
     return (
-      <div>
-        <Articles
-          loading={loading}
-          newsResponse={props.newsResponse}
-        />
-      </div>
+      <Grid container>
+        <Grid item xs={9}>
+          <Articles
+            loading={loading}
+            newsResponse={props.newsResponse}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Sidebar />
+        </Grid>
+      </Grid>
     );
   }
 );
