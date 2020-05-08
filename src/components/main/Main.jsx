@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // Styled Components
 import Container from '@material-ui/core/Container';
 // Components
-import ArticlesPage from './pages/articles-page/ArticlesPage';
+import NewsPage from './pages/news-page/NewsPage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,7 +16,7 @@ export default function Main() {
   const classes = useStyles();
   return (
     <Container className={classes.root}>
-      <ArticlesPage />
+      <NewsPage />
     </Container>
   );
 };
