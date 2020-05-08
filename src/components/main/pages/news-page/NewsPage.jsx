@@ -10,14 +10,19 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, { getNewsResponse })(
   function NewsPage(props) {
+    const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
-      props.getNewsResponse();
-    });
+      setLoading(true);
+      props.getNewsResponse(() => setLoading(false));
+    }, []);
 
     return (
       <div>
-        {props.newsResponse.articles && (<Articles newsResponse={props.newsResponse} />)}
+        <Articles
+          loading={loading}
+          newsResponse={props.newsResponse}
+        />
       </div>
     );
   }

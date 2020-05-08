@@ -32,7 +32,8 @@ const setNewsResponse = (data) => ({
 
 // Thunk Creators
 
-export const getNewsResponse = () => async (dispatch) => {
+export const getNewsResponse = (setLoading) => async (dispatch) => {
   const data = await newsAPI.getNewsResponse();
   dispatch(setNewsResponse(data));
+  setLoading();
 };

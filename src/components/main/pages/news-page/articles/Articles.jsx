@@ -27,6 +27,10 @@ const useStyles = makeStyles(theme => ({
 export default function Articles(props) {
   const classes = useStyles();
 
+  if (props.loading) {
+    return 'Загружается...';
+  };
+
   const setArticles = () => (
     props.newsResponse.articles.map((item, index) => {
       return (
