@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 // Components
 import NewsPage from './pages/news-page/NewsPage';
 import AboutPage from './pages/about-page/AboutPage';
+import HelpPage from './pages/help-page/HelpPage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +25,7 @@ export default function Main() {
         </Route>
         <Route path='/news' component={NewsPage} />
         <Route path='/about' component={AboutPage} />
+        <Route path='/help' component={HelpPage} />
         <Redirect to='/news' />
       </Switch>
     </Container>
