@@ -7,6 +7,15 @@ const initialState = {
     articles: null,
     totalResults: 0,
   },
+  newsParams: {
+    pageSize: 10,
+    page: 1,
+    sources: [
+      'Lenta',
+      'RT',
+    ],
+    language: 'ru',
+  },
 };
 
 export default function newsReducer(state = initialState, action) {
@@ -32,8 +41,8 @@ const setNewsResponse = (data) => ({
 
 // Thunk Creators
 
-export const getNewsResponse = (setLoading) => async (dispatch) => {
-  const data = await newsAPI.getNewsResponse();
+export const getNewsResponse = (newsParams) => async (dispatch) => {
+  const data = await newsAPI.getNewsResponse(newsParams);
 
   data.articles.forEach((item) => {
     let date = new Date(Date.parse(item.publishedAt));
@@ -45,5 +54,4 @@ export const getNewsResponse = (setLoading) => async (dispatch) => {
   });
 
   dispatch(setNewsResponse(data));
-  setLoading();
 };

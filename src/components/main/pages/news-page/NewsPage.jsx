@@ -10,15 +10,18 @@ import Sidebar from './sidebar/Sidebar';
 
 const mapStateToProps = (state) => ({
   newsResponse: state.news.newsResponse,
+  newsParams: state.news.newsParams,
 });
 
 export default connect(mapStateToProps, { getNewsResponse })(
   function NewsPage(props) {
+    const { newsResponse, getNewsResponse, newsParams } = props;
     const [loading, setLoading] = React.useState(true);
 
-    React.useEffect(() => {
+    React.useEffect(async () => {
       setLoading(true);
-      props.getNewsResponse(() => setLoading(false));
+      await getNewsResponse(newsParams);
+      setLoading(false);
     }, []);
 
     return (
@@ -26,7 +29,7 @@ export default connect(mapStateToProps, { getNewsResponse })(
         <Grid item xs={9}>
           <Articles
             loading={loading}
-            newsResponse={props.newsResponse}
+            newsResponse={newsResponse}
           />
           <ProgressButton />
         </Grid>
