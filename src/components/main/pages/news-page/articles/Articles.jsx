@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Masonry from 'react-masonry-component';
 // Styled Components
+import Skeleton from '@material-ui/lab/Skeleton';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -10,6 +11,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
   masonry: {
@@ -25,28 +27,55 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Articles(props) {
+  const { isInitial, articles, newsParams } = props;
   const classes = useStyles();
 
-  if (!props.isInitial) {
-    return 'Загружается...';
-  };
+  const setSkeleton = () => (
+    Array.from(new Array(newsParams.pageSize))
+  );
 
   const setArticles = () => (
-    props.newsResponse.articles.map((item, index) => {
+    (!isInitial ? setSkeleton() : articles).map((item, index) => {
       return (
         <Card className={classes.card} key={index}>
-          <CardActionArea>
-            <CardMedia component="img" alt={item.title} image={item.urlToImage} />
-            <CardContent>
-              <Typography gutterBottom>{item.publishedAt}</Typography>
-              <Typography gutterBottom variant="h5">{item.title}</Typography>
-              <Typography>{item.description}</Typography>
-            </CardContent>
-          </CardActionArea>
-          <Divider />
-          <CardActions className={classes.cardActions}>
-            <Chip variant="outlined" label={item.source.name} />
-          </CardActions>
+          {item ?
+            <React.Fragment>
+              <CardActionArea>
+                <CardMedia component="img" alt={item.title} image={item.urlToImage} />
+                <CardContent>
+                  <Typography gutterBottom>{item.publishedAt}</Typography>
+                  <Typography gutterBottom variant="h5">{item.title}</Typography>
+                  <Typography>{item.description}</Typography>
+                </CardContent>
+              </CardActionArea>
+              <Divider />
+              <CardActions className={classes.cardActions}>
+                <Chip variant="outlined" label={item.source.name} />
+              </CardActions>
+            </React.Fragment> :
+
+            <React.Fragment>
+              <Box>
+                <Skeleton height="300px" variant="rect" />
+                <CardContent>
+                  <Skeleton width="30%" />
+                  <Box pt={1}>
+                    <Skeleton />
+                    <Skeleton width="60%" />
+                  </Box>
+                  <Box pt={1}>
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton width="60%" />
+                  </Box>
+                </CardContent>
+              </Box>
+              <Divider />
+              <CardActions className={classes.cardActions}>
+                <Skeleton width="30%" />
+              </CardActions>
+            </React.Fragment>
+          }
         </Card>
       );
     })

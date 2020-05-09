@@ -9,13 +9,13 @@ import ProgressButton from './progress-button/ProgressButton';
 import Sidebar from './sidebar/Sidebar';
 
 const mapStateToProps = (state) => ({
-  newsResponse: state.news.newsResponse,
+  articles: state.news.newsResponse.articles,
   newsParams: state.news.newsParams,
 });
 
 export default connect(mapStateToProps, { getNewsResponse })(
   function NewsPage(props) {
-    const { newsResponse, getNewsResponse, newsParams } = props;
+    const { articles, getNewsResponse, newsParams } = props;
     const [isInitial, setIsInitial] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
@@ -30,7 +30,7 @@ export default connect(mapStateToProps, { getNewsResponse })(
     // Определение страницы для запроса
     const setPage = async () => {
       setLoading(true);
-      const page = newsResponse.articles.length / newsParams.pageSize + 1;
+      const page = articles.length / newsParams.pageSize + 1;
       await getNewsResponse({ ...newsParams, page });
       setLoading(false);
     };
@@ -40,7 +40,8 @@ export default connect(mapStateToProps, { getNewsResponse })(
         <Grid item xs={9}>
           <Articles
             isInitial={isInitial}
-            newsResponse={newsResponse}
+            articles={articles}
+            newsParams={newsParams}
           />
           <ProgressButton
             setPage={setPage}

@@ -7,6 +7,7 @@ const initialState = {
   newsResponse: {
     articles: [],
     totalResults: 0,
+    status: '',
   },
   newsParams: {
     pageSize: 10,
@@ -54,6 +55,7 @@ const pushNewsResponse = (data) => ({
 export const getNewsResponse = (newsParams) => async (dispatch) => {
   const data = await newsAPI.getNewsResponse(newsParams);
 
+  // Изменение формата даты
   data.articles.forEach((item) => {
     let date = new Date(Date.parse(item.publishedAt));
     item.publishedAt = date.toLocaleString('ru', {
