@@ -2,8 +2,8 @@ import { newsAPI } from '../../api/api';
 
 const SET_NEWS_RESPONSE = 'news/SET_NEWS_RESPONSE';
 const PUSH_ARTICLES = 'news/PUSH_ARTICLES';
-const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
-const SET_DATE = 'SET_DATE';
+const SET_SEARCH_VALUE = 'news/SET_SEARCH_VALUE';
+const SET_DATE = 'news/SET_DATE';
 
 const initialState = {
   newsResponse: {

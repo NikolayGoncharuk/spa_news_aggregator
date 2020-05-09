@@ -1,15 +1,18 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const makeTheme = createMuiTheme({
-  palette: {
-    type: 'dark',
-  },
-
-  props: {
-    MuiButton: {
-      variant: 'contained',
+export default function makeTheme(props) {
+  return createMuiTheme({
+    palette: {
+      type: (props.darkMode ? 'dark' : 'light')
     },
-  },
-});
+    typography: {
+      fontSize: props.typography.fontSize,
+    },
 
-export default makeTheme;
+    props: {
+      MuiButton: {
+        variant: 'contained',
+      },
+    },
+  });
+};
