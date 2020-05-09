@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 // Styled Components
 import AppBar from '@material-ui/core/AppBar';
@@ -20,7 +21,7 @@ export default function Header() {
       padding: '20px 30px',
       minWidth: 0,
     },
-  }))(props => <Tab disableRipple {...props} />);
+  }))(props => <Tab disableRipple component={NavLink} {...props} />);
 
   return (
     <AppBar position="static" color="transparent">
@@ -37,10 +38,10 @@ export default function Header() {
               textColor="primary"
               centered
             >
-              <StyledTab label="Новости" />
-              <StyledTab label="О нас" />
-              <StyledTab label="Помощь" />
-              <StyledTab label="Настройки" />
+              <StyledTab to="/news" label="Новости" />
+              <StyledTab to="/about" label="О нас" />
+              <StyledTab to="/help" label="Помощь" />
+              <StyledTab to="/settings" label="Настройки" />
             </Tabs>
           </Grid>
         </Grid>

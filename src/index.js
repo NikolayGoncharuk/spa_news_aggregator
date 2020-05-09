@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from './model/store';
 import * as serviceWorker from './serviceWorker';
@@ -8,9 +9,11 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider store={store}>
-      <App />
-    </ReduxProvider>
+    <BrowserRouter>
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
