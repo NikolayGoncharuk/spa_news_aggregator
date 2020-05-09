@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProgressButton(props) {
+  const { articles } = props;
   const classes = useStyles();
 
   const setButton = () => {
@@ -28,11 +29,11 @@ export default function ProgressButton(props) {
           className={classes.circular}
           color="inherit"
         />
-      } else {
+      } else if (articles.length < 100) {
         return <Button
           className={classes.button}
           variant="outlined"
-          onClick={props.setPage}
+          onClick={props.getPage}
         >Показать еще</Button>
       };
     };

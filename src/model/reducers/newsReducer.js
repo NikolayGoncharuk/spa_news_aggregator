@@ -1,7 +1,8 @@
 import { newsAPI } from '../../api/api';
 
 const SET_NEWS_RESPONSE = 'news/SET_NEWS_RESPONSE';
-const PUSH_NEWS_RESPONSE = 'news/PUSH_NEWS_RESPONSE';
+const PUSH_ARTICLES = 'news/PUSH_ARTICLES';
+const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
 
 const initialState = {
   newsResponse: {
@@ -11,6 +12,7 @@ const initialState = {
   },
   newsParams: {
     pageSize: 10,
+    searchValue: '',
     page: 1,
     sources: [
       'Lenta',
@@ -28,13 +30,24 @@ export default function newsReducer(state = initialState, action) {
         newsResponse: {
           articles: action.data.articles,
           totalResults: action.data.totalResults,
+          status: action.data.status,
         },
       };
-    case PUSH_NEWS_RESPONSE:
+    case PUSH_ARTICLES:
       action.data.articles.forEach(item => {
         state.newsResponse.articles.push(item);
       });
-      return { ...state, newsResponse: { ...state.newsResponse } };
+      return {
+        ...state,
+        newsResponse: { ...state.newsResponse }
+      };
+    case SET_SEARCH_VALUE:
+      return {
+        ...state, newsParams: {
+          ...state.newsParams,
+          searchValue: action.searchValue
+        }
+      };
     default:
       return state;
   };
@@ -46,9 +59,13 @@ const setNewsResponse = (data) => ({
   type: SET_NEWS_RESPONSE, data,
 });
 
-const pushNewsResponse = (data) => ({
-  type: PUSH_NEWS_RESPONSE, data,
+const pushArticles = (data) => ({
+  type: PUSH_ARTICLES, data,
 });
+
+export const setSearchValue = (searchValue) => {
+  return { type: SET_SEARCH_VALUE, searchValue }
+};
 
 // Thunk creators
 
@@ -66,5 +83,5 @@ export const getNewsResponse = (newsParams) => async (dispatch) => {
   });
 
   if (newsParams.page === 1) dispatch(setNewsResponse(data));
-  else dispatch(pushNewsResponse(data));
+  else dispatch(pushArticles(data));
 };

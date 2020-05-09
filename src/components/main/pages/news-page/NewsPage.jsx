@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getNewsResponse } from '../../../../model/reducers/newsReducer';
+import { getNewsResponse, setSearchValue } from '../../../../model/reducers/newsReducer';
 // Styled Components
 import Grid from '@material-ui/core/Grid';
 // Components
@@ -13,9 +13,9 @@ const mapStateToProps = (state) => ({
   newsParams: state.news.newsParams,
 });
 
-export default connect(mapStateToProps, { getNewsResponse })(
+export default connect(mapStateToProps, { getNewsResponse, setSearchValue })(
   function NewsPage(props) {
-    const { articles, getNewsResponse, newsParams } = props;
+    const { articles, getNewsResponse, newsParams, setSearchValue } = props;
     const [isInitial, setIsInitial] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
@@ -28,7 +28,7 @@ export default connect(mapStateToProps, { getNewsResponse })(
     }, [newsParams]);
 
     // Определение страницы для запроса
-    const setPage = async () => {
+    const getPage = async () => {
       setLoading(true);
       const page = articles.length / newsParams.pageSize + 1;
       await getNewsResponse({ ...newsParams, page });
@@ -44,13 +44,17 @@ export default connect(mapStateToProps, { getNewsResponse })(
             newsParams={newsParams}
           />
           <ProgressButton
-            setPage={setPage}
+            articles={articles}
+            getPage={getPage}
             isInitial={isInitial}
             loading={loading}
           />
         </Grid>
         <Grid item xs={3}>
-          <Sidebar />
+          <Sidebar
+            newsParams={newsParams}
+            setSearchValue={setSearchValue}
+          />
         </Grid>
       </Grid>
     );

@@ -16,13 +16,16 @@ const Widget = withStyles(theme => ({
   root: { paddingBottom: '48px' },
 }))(props => <Box {...props} />);
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   const classes = useStyles();
 
   return (
     <aside className={classes.root}>
       <Widget>
-        <Search />
+        <Search
+          searchValue={props.newsParams.searchValue}
+          setSearchValue={props.setSearchValue}
+        />
       </Widget>
       <Widget>
         <Date />

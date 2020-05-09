@@ -18,16 +18,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Search() {
+export default function Search(props) {
   const classes = useStyles();
+  let [localSearchValue, setLocalSearchValue] = React.useState(props.searchValue);
+
+  const handleSearchValue = (event) => {
+    setLocalSearchValue(event.target.value);
+  };
+
+  const setSearchValue = () => {
+    props.setSearchValue(localSearchValue);
+  };
 
   return (
     <Paper elevation={4} component="form">
       <InputBase
         className={classes.input}
         placeholder="Поиск..."
+        onChange={handleSearchValue}
+        value={localSearchValue}
       />
-      <IconButton className={classes.iconButton}>
+      <IconButton
+        className={classes.iconButton}
+        onClick={setSearchValue}
+        disabled={!localSearchValue && !props.searchValue}
+      >
         <SearchIcon />
       </IconButton>
     </Paper>
