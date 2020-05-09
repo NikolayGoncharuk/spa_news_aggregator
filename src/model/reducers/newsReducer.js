@@ -3,6 +3,7 @@ import { newsAPI } from '../../api/api';
 const SET_NEWS_RESPONSE = 'news/SET_NEWS_RESPONSE';
 const PUSH_ARTICLES = 'news/PUSH_ARTICLES';
 const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
+const SET_DATE = 'SET_DATE';
 
 const initialState = {
   newsResponse: {
@@ -11,13 +12,11 @@ const initialState = {
     status: '',
   },
   newsParams: {
+    page: 1,
     pageSize: 10,
     searchValue: '',
-    page: 1,
-    sources: [
-      'Lenta',
-      'RT',
-    ],
+    date: { from: '', to: '' },
+    sources: ['Lenta', 'RT'],
     language: 'ru',
   },
 };
@@ -48,6 +47,14 @@ export default function newsReducer(state = initialState, action) {
           searchValue: action.searchValue
         }
       };
+    case SET_DATE:
+      return {
+        ...state, newsParams: {
+          ...state.newsParams, date: {
+            ...state.newsParams.date, to: action.date
+          }
+        }
+      };
     default:
       return state;
   };
@@ -65,6 +72,10 @@ const pushArticles = (data) => ({
 
 export const setSearchValue = (searchValue) => {
   return { type: SET_SEARCH_VALUE, searchValue }
+};
+
+export const setDate = (date) => {
+  return { type: SET_DATE, date }
 };
 
 // Thunk creators

@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Search(props) {
+export default function SearchWidget(props) {
   const classes = useStyles();
   let [localSearchValue, setLocalSearchValue] = React.useState(props.searchValue);
 

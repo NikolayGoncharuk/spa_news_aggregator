@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getNewsResponse, setSearchValue } from '../../../../model/reducers/newsReducer';
+import { getNewsResponse, setSearchValue, setDate } from '../../../../model/reducers/newsReducer';
 // Styled Components
 import Grid from '@material-ui/core/Grid';
 // Components
@@ -13,9 +13,9 @@ const mapStateToProps = (state) => ({
   newsParams: state.news.newsParams,
 });
 
-export default connect(mapStateToProps, { getNewsResponse, setSearchValue })(
+export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDate })(
   function NewsPage(props) {
-    const { articles, getNewsResponse, newsParams, setSearchValue } = props;
+    const { articles, getNewsResponse, newsParams, setSearchValue, setDate } = props;
     const [isInitial, setIsInitial] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
@@ -54,6 +54,7 @@ export default connect(mapStateToProps, { getNewsResponse, setSearchValue })(
           <Sidebar
             newsParams={newsParams}
             setSearchValue={setSearchValue}
+            setDate={setDate}
           />
         </Grid>
       </Grid>

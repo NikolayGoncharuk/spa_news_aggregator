@@ -3,8 +3,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 // Styled Components
 import Box from '@material-ui/core/Box';
 // Components
-import Search from './search/Search';
-import Date from './date/Date';
+import SearchWidget from './search-widget/SearchWidget';
+import DateWidget from './date-widget/DateWidget';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,13 +22,16 @@ export default function Sidebar(props) {
   return (
     <aside className={classes.root}>
       <Widget>
-        <Search
+        <SearchWidget
           searchValue={props.newsParams.searchValue}
           setSearchValue={props.setSearchValue}
         />
       </Widget>
       <Widget>
-        <Date />
+        <DateWidget
+          date={props.newsParams.date}
+          setDate={props.setDate}
+        />
       </Widget>
     </aside >
   );

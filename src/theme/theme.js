@@ -4,6 +4,12 @@ const makeTheme = createMuiTheme({
   palette: {
     type: 'dark',
   },
+
+  props: {
+    MuiButton: {
+      variant: 'contained',
+    },
+  },
 });
 
 export default makeTheme;
