@@ -7,6 +7,7 @@ import Container from '@material-ui/core/Container';
 import NewsPage from './pages/news-page/NewsPage';
 import AboutPage from './pages/about-page/AboutPage';
 import HelpPage from './pages/help-page/HelpPage';
+import SettingsPage from './pages/settings-page/SettingsPage';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +27,7 @@ export default function Main() {
         <Route path='/news' component={NewsPage} />
         <Route path='/about' component={AboutPage} />
         <Route path='/help' component={HelpPage} />
+        <Route path='/settings' component={SettingsPage} />
         <Redirect to='/news' />
       </Switch>
     </Container>

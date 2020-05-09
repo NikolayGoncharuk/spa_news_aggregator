@@ -58,7 +58,7 @@ export default function DateWidget(props) {
   const [localDate, setLocalDate] = React.useState(date);
 
   // Сброс даты
-  const dropDate = () => {
+  const resetDate = () => {
     setLocalDate('');
     setDate('');
   };
@@ -107,7 +107,7 @@ export default function DateWidget(props) {
           <Button
             color="secondary"
             disabled={!localDate && !date}
-            onClick={dropDate}
+            onClick={resetDate}
           >Сбросить</Button>
         </Grid>
       </Grid>

@@ -4,6 +4,7 @@ const SET_NEWS_RESPONSE = 'news/SET_NEWS_RESPONSE';
 const PUSH_ARTICLES = 'news/PUSH_ARTICLES';
 const SET_SEARCH_VALUE = 'news/SET_SEARCH_VALUE';
 const SET_DATE = 'news/SET_DATE';
+const SET_PAGE_SIZE = 'news/SET_PAGE_SIZE';
 
 const initialState = {
   newsResponse: {
@@ -55,6 +56,12 @@ export default function newsReducer(state = initialState, action) {
           }
         }
       };
+    case SET_PAGE_SIZE:
+      return {
+        ...state, newsParams: {
+          ...state.newsParams, pageSize: action.pageSize
+        }
+      };
     default:
       return state;
   };
@@ -76,6 +83,10 @@ export const setSearchValue = (searchValue) => {
 
 export const setDate = (date) => {
   return { type: SET_DATE, date }
+};
+
+export const setPageSize = (pageSize) => {
+  return { type: SET_PAGE_SIZE, pageSize }
 };
 
 // Thunk creators
