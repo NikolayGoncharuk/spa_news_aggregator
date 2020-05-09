@@ -1,10 +1,11 @@
 import { newsAPI } from '../../api/api';
 
 const SET_NEWS_RESPONSE = 'news/SET_NEWS_RESPONSE';
+const PUSH_NEWS_RESPONSE = 'news/PUSH_NEWS_RESPONSE';
 
 const initialState = {
   newsResponse: {
-    articles: null,
+    articles: [],
     totalResults: 0,
   },
   newsParams: {
@@ -27,19 +28,28 @@ export default function newsReducer(state = initialState, action) {
           articles: action.data.articles,
           totalResults: action.data.totalResults,
         },
-      }
+      };
+    case PUSH_NEWS_RESPONSE:
+      action.data.articles.forEach(item => {
+        state.newsResponse.articles.push(item);
+      });
+      return { ...state, newsResponse: { ...state.newsResponse } };
     default:
       return state;
   };
 };
 
-// Action Creators
+// Action creators
 
 const setNewsResponse = (data) => ({
   type: SET_NEWS_RESPONSE, data,
 });
 
-// Thunk Creators
+const pushNewsResponse = (data) => ({
+  type: PUSH_NEWS_RESPONSE, data,
+});
+
+// Thunk creators
 
 export const getNewsResponse = (newsParams) => async (dispatch) => {
   const data = await newsAPI.getNewsResponse(newsParams);
@@ -53,5 +63,6 @@ export const getNewsResponse = (newsParams) => async (dispatch) => {
     });
   });
 
-  dispatch(setNewsResponse(data));
+  if (newsParams.page === 1) dispatch(setNewsResponse(data));
+  else dispatch(pushNewsResponse(data));
 };

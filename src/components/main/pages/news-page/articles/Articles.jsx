@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 export default function Articles(props) {
   const classes = useStyles();
 
-  if (props.loading) {
+  if (!props.isInitial) {
     return 'Загружается...';
   };
 

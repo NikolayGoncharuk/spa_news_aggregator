@@ -7,4 +7,7 @@ const reducers = combineReducers({
   news: newsReducer,
 });
 
-export default createStore(reducers, applyMiddleware(thunkMiddleware));
+const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+export default store;
+window.store = store;

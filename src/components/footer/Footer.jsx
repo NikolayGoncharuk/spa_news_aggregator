@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const WidgetTitle = withStyles()(props => (
+const WidgetTitle = withStyles({})(props => (
   <Typography gutterBottom variant="h4" {...props} />
 ));
 
@@ -36,7 +36,7 @@ const WidgetContent = withStyles(theme => ({
   root: { marginTop: '16px' },
 }))(props => <Typography {...props} />);
 
-const ContactItem = withStyles()(props => (
+const ContactItem = withStyles({})(props => (
   <ListItem>
     <ListItemIcon>
       {props.icon}

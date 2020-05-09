@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getNewsResponse } from '../../../../model/reducers/newsReducer';
 // Styled Components
 import Grid from '@material-ui/core/Grid';
-//Components
+// Components
 import Articles from './articles/Articles';
 import ProgressButton from './progress-button/ProgressButton';
 import Sidebar from './sidebar/Sidebar';
@@ -16,22 +16,37 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getNewsResponse })(
   function NewsPage(props) {
     const { newsResponse, getNewsResponse, newsParams } = props;
-    const [loading, setLoading] = React.useState(true);
+    const [isInitial, setIsInitial] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
-    React.useEffect(async () => {
+    React.useEffect(() => {
+      const fetch = async () => {
+        await getNewsResponse(newsParams);
+        setIsInitial(true);
+      };
+      fetch();
+    }, [newsParams]);
+
+    // Определение страницы для запроса
+    const setPage = async () => {
       setLoading(true);
-      await getNewsResponse(newsParams);
+      const page = newsResponse.articles.length / newsParams.pageSize + 1;
+      await getNewsResponse({ ...newsParams, page });
       setLoading(false);
-    }, []);
+    };
 
     return (
       <Grid container>
         <Grid item xs={9}>
           <Articles
-            loading={loading}
+            isInitial={isInitial}
             newsResponse={newsResponse}
           />
-          <ProgressButton />
+          <ProgressButton
+            setPage={setPage}
+            isInitial={isInitial}
+            loading={loading}
+          />
         </Grid>
         <Grid item xs={3}>
           <Sidebar />

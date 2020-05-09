@@ -22,16 +22,19 @@ export default function ProgressButton(props) {
   const classes = useStyles();
 
   const setButton = () => {
-    if (props.loading) {
-      return <CircularProgress
-        className={classes.circular}
-        color="inherit"
-      />
-    } else {
-      return <Button
-        className={classes.button}
-        variant="outlined"
-      >Показать еще</Button>
+    if (props.isInitial) {
+      if (props.loading) {
+        return <CircularProgress
+          className={classes.circular}
+          color="inherit"
+        />
+      } else {
+        return <Button
+          className={classes.button}
+          variant="outlined"
+          onClick={props.setPage}
+        >Показать еще</Button>
+      };
     };
   };
 
