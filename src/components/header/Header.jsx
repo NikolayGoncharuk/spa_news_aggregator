@@ -10,18 +10,24 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 export default function Header() {
-  const [value, setValue] = React.useState(0);
+  const [navItem, setNavItem] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleNavItem = (event, newValue) => {
+    setNavItem(newValue);
   };
 
-  const StyledTab = withStyles(theme => ({
+  const NavTab = withStyles(theme => ({
     root: {
       padding: '20px 30px',
       minWidth: 0,
     },
-  }))(props => <Tab disableRipple component={NavLink} {...props} />);
+  }))(props => (
+    <Tab
+      disableRipple
+      component={NavLink}
+      {...props}
+    />
+  ));
 
   return (
     <AppBar position="static" color="transparent">
@@ -32,16 +38,16 @@ export default function Header() {
           </Grid>
           <Grid item>
             <Tabs
-              value={value}
-              onChange={handleChange}
+              value={navItem}
+              onChange={handleNavItem}
               indicatorColor="primary"
               textColor="primary"
               centered
             >
-              <StyledTab to="/news" label="Новости" />
-              <StyledTab to="/about" label="О нас" />
-              <StyledTab to="/help" label="Помощь" />
-              <StyledTab to="/settings" label="Настройки" />
+              <NavTab to="/news" label="Новости" />
+              <NavTab to="/about" label="О нас" />
+              <NavTab to="/help" label="Помощь" />
+              <NavTab to="/settings" label="Настройки" />
             </Tabs>
           </Grid>
         </Grid>
