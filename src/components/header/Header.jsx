@@ -10,11 +10,24 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // Components
 import ScrollTop from './scroll-top/ScrollTop';
+import MobileMenu from './mobile-menu/MobileMenu';
 
 const useStyles = makeStyles(theme => ({
   navItems: {
     padding: '20px 30px',
     minWidth: 0,
+  },
+  sectionDesktop: {
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+  sectionMobile: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+    },
   },
 }));
 
@@ -50,15 +63,21 @@ export default function Header(props) {
               <Typography variant="h4">Агрегатор новостей</Typography>
             </Grid>
             <Grid item>
-              <Tabs
-                value={navItemValue}
-                onChange={handleNavItem}
-                indicatorColor="primary"
-                textColor="primary"
-                centered
-              >
-                {setNavItems()}
-              </Tabs>
+              <Grid item>
+                <Tabs
+                  className={classes.sectionDesktop}
+                  value={navItemValue}
+                  onChange={handleNavItem}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  centered
+                >
+                  {setNavItems()}
+                </Tabs>
+                <div className={classes.sectionMobile}>
+                  <MobileMenu navItems={navItems} />
+                </div>
+              </Grid>
             </Grid>
           </Grid>
         </Toolbar>
