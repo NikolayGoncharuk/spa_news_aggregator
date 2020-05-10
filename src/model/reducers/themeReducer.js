@@ -1,4 +1,5 @@
 import { setPageSize } from './newsReducer';
+import { newsAPI } from '../../api/api';
 
 const SET_DARK_MODE = 'theme/SET_DARK_MODE';
 const SET_FONT_SIZE = 'theme/SET_FONT_SIZE';
