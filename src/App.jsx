@@ -5,6 +5,7 @@ import makeTheme from './theme/theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // Components
 import Header from './components/header/Header';
+import Breadcrumbs from './components/breadcrumbs/Breadcrumbs';
 import Main from './components/main/Main';
 import Footer from './components/footer/Footer';
 
@@ -19,6 +20,7 @@ export default connect(mapStateToProps, {})(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Header />
+        <Breadcrumbs />
         <Main />
         <Footer />
       </ThemeProvider>
