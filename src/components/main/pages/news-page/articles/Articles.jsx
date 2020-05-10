@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Masonry from 'react-masonry-component';
 // Styled Components
@@ -12,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
   masonry: {
@@ -29,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 export default function Articles(props) {
   const { isInitial, articles, newsParams } = props;
   const classes = useStyles();
+  const match = useRouteMatch();
 
   const setSkeleton = () => (
     Array.from(new Array(newsParams.pageSize))
@@ -40,14 +43,16 @@ export default function Articles(props) {
         <Card className={classes.card} key={index}>
           {item ?
             <React.Fragment>
-              <CardActionArea>
-                <CardMedia component="img" alt={item.title} image={item.urlToImage} />
-                <CardContent>
-                  <Typography gutterBottom>{item.publishedAt}</Typography>
-                  <Typography gutterBottom variant="h5">{item.title}</Typography>
-                  <Typography>{item.description}</Typography>
-                </CardContent>
-              </CardActionArea>
+              <Link component={NavLink} to={`${match.url}/${item.id}`}>
+                <CardActionArea>
+                  <CardMedia component="img" alt={item.title} image={item.urlToImage} />
+                  <CardContent>
+                    <Typography gutterBottom>{item.publishedAt}</Typography>
+                    <Typography gutterBottom variant="h5">{item.title}</Typography>
+                    <Typography>{item.description}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Link>
               <Divider />
               <CardActions className={classes.cardActions}>
                 <Chip variant="outlined" label={item.source.name} />

@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route, useRouteMatch } from 'react-router-dom';
 import { getNewsResponse, setSearchValue, setDate } from '../../../../model/reducers/newsReducer';
 // Styled Components
 import Grid from '@material-ui/core/Grid';
 // Components
 import Articles from './articles/Articles';
+import ArticlePage from './article-page/ArticlePage';
 import ProgressButton from './progress-button/ProgressButton';
 import Sidebar from './sidebar/Sidebar';
 
@@ -16,6 +18,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDate })(
   function NewsPage(props) {
     const { articles, getNewsResponse, newsParams, setSearchValue, setDate } = props;
+    const match = useRouteMatch();
     const [isInitial, setIsInitial] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
@@ -38,17 +41,22 @@ export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDa
     return (
       <Grid container>
         <Grid item xs={9}>
-          <Articles
-            isInitial={isInitial}
-            articles={articles}
-            newsParams={newsParams}
-          />
-          <ProgressButton
-            articles={articles}
-            getPage={getPage}
-            isInitial={isInitial}
-            loading={loading}
-          />
+          <Route exact path={match.path}>
+            <Articles
+              isInitial={isInitial}
+              articles={articles}
+              newsParams={newsParams}
+            />
+            <ProgressButton
+              articles={articles}
+              getPage={getPage}
+              isInitial={isInitial}
+              loading={loading}
+            />
+          </Route>
+          <Route path={`${match.path}/:postPageRef`}>
+            <ArticlePage articles={articles} />
+          </Route>
         </Grid>
         <Grid item xs={3}>
           <Sidebar

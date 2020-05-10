@@ -25,6 +25,9 @@ const initialState = {
 export default function newsReducer(state = initialState, action) {
   switch (action.type) {
     case SET_NEWS_RESPONSE:
+      action.data.articles.forEach((item, index) => {
+        item.id = state.newsResponse.articles.length + index + 1;
+      });
       return {
         ...state,
         newsResponse: {
@@ -34,7 +37,8 @@ export default function newsReducer(state = initialState, action) {
         },
       };
     case PUSH_ARTICLES:
-      action.data.articles.forEach(item => {
+      action.data.articles.forEach((item, index) => {
+        item.id = state.newsResponse.articles.length + index + 1;
         state.newsResponse.articles.push(item);
       });
       return {
