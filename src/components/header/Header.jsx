@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+// Components
+import ScrollTop from './scroll-top/ScrollTop';
 
 const useStyles = makeStyles(theme => ({
   navItems: {
@@ -40,25 +42,28 @@ export default function Header(props) {
   );
 
   return (
-    <AppBar position="static" color="transparent">
-      <Toolbar variant="dense">
-        <Grid container justify="space-between" alignItems="center">
-          <Grid item>
-            <Typography variant="h4">Агрегатор новостей</Typography>
+    <React.Fragment>
+      <AppBar position="static" color="transparent">
+        <Toolbar variant="dense">
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item>
+              <Typography variant="h4">Агрегатор новостей</Typography>
+            </Grid>
+            <Grid item>
+              <Tabs
+                value={navItemValue}
+                onChange={handleNavItem}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                {setNavItems()}
+              </Tabs>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Tabs
-              value={navItemValue}
-              onChange={handleNavItem}
-              indicatorColor="primary"
-              textColor="primary"
-              centered
-            >
-              {setNavItems()}
-            </Tabs>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+      <ScrollTop />
+    </React.Fragment>
   );
 };
