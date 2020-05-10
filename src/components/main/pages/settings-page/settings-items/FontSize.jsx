@@ -11,7 +11,7 @@ export default function FontSize(props) {
     <div className={className}>
       <Typography gutterBottom variant="h5">Размер шрифта: {fontSize}</Typography>
       <Grid container spacing={3}>
-        <Grid item xs>
+        <Grid item  xs={12} md={8}>
           <Typography>Orci sagittis eu volutpat odio facilisis mauris sit. Ac placerat vestibulum lectus mauris ultrices eros in. Vitae tortor condimentum lacinia quis vel eros donec. Pharetra convallis posuere morbi leo urna molestie at elementum eu.</Typography>
         </Grid>
         <Grid item xs>

@@ -22,7 +22,7 @@ export default connect(mapStateToProps, {})(
         <CssBaseline />
         <Header navItems={props.navItems} />
         <Breadcrumbs navItems={props.navItems} />
-        <Main />
+        <Main navItems={props.navItems} />
         <Footer />
       </ThemeProvider>
     );

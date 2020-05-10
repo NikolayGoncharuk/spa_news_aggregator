@@ -9,6 +9,13 @@ import DateWidget from './date-widget/DateWidget';
 const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: '32px',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '24px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(6),
+      marginLeft: 0,
+    },
   },
 }));
 

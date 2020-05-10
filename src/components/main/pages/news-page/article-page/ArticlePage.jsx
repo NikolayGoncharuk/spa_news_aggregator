@@ -11,6 +11,24 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
+  content: {
+    marginTop: '24px',
+    marginBottom: '24px',
+  },
+  img: {
+    width: '50%',
+    height: 'auto',
+    float: 'left',
+    marginRight: '24px',
+    marginBottom: '24px',
+  },
+  tagsWraper: {
+    marginTop: '24px',
+  },
+  divider: {
+    clear: 'left',
+    width: '100%',
+  },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
@@ -44,15 +62,18 @@ export default function PostPage(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setPostData(articles.find(item => {
-      return (Number(item.id) === Number(params.postPageRef));
-    }));
+    setPostData(articles.find(item => (
+      (+item.id === +params.articleId)
+    )));
   }, []);
 
   if (!postData) {
     return (
       <div className={classes.progressWrapper}>
-        <CircularProgress color="inherit" className={classes.progress} />
+        <CircularProgress
+          color="inherit"
+          className={classes.progress}
+        />
       </div>
     );
   };
@@ -62,18 +83,19 @@ export default function PostPage(props) {
       <Typography gutterBottom variant="h4">{postData.title}</Typography>
       <Typography gutterBottom>{postData.publishedAt}</Typography>
       <Divider />
-      <div>
+      <div className={classes.content}>
         <Paper
           component="img"
+          className={classes.img}
           src={postData.urlToImage}
           alt={postData.title}
           onClick={handleOpen}
         />
         <Typography>{postData.description}</Typography>
       </div>
-      <div />
+      <div className={classes.divider} />
       <Divider />
-      <div>
+      <div className={classes.tagsWraper}>
         <Chip component={Link} href={postData.url} target="_blanc" variant="outlined" label={postData.source.name} />
       </div>
       <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>

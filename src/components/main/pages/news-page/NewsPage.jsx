@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { getNewsResponse, setSearchValue, setDate } from '../../../../model/reducers/newsReducer';
 // Styled Components
 import Grid from '@material-ui/core/Grid';
@@ -40,25 +40,27 @@ export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDa
 
     return (
       <Grid container>
-        <Grid item xs={9}>
-          <Route exact path={match.path}>
-            <Articles
-              isInitial={isInitial}
-              articles={articles}
-              newsParams={newsParams}
-            />
-            <ProgressButton
-              articles={articles}
-              getPage={getPage}
-              isInitial={isInitial}
-              loading={loading}
-            />
-          </Route>
-          <Route path={`${match.path}/:postPageRef`}>
-            <ArticlePage articles={articles} />
-          </Route>
+        <Grid item xs={12} md={9}>
+          <Switch>
+            <Route exact path={match.path}>
+              <Articles
+                isInitial={isInitial}
+                articles={articles}
+                newsParams={newsParams}
+              />
+              <ProgressButton
+                articles={articles}
+                getPage={getPage}
+                isInitial={isInitial}
+                loading={loading}
+              />
+            </Route>
+            <Route path={`${match.path}/:articleId`}>
+              <ArticlePage articles={articles} />
+            </Route>
+          </Switch>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs md={3}>
           <Sidebar
             newsParams={newsParams}
             setSearchValue={setSearchValue}

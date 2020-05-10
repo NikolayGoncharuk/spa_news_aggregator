@@ -18,10 +18,24 @@ import Link from '@material-ui/core/Link';
 const useStyles = makeStyles(theme => ({
   masonry: {
     margin: '0 -16px',
+    [theme.breakpoints.down('md')]: {
+      margin: '0 -12px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      margin: 0,
+    },
   },
   card: {
     width: 'calc(50% - 32px)',
     margin: '0 16px 32px',
+    [theme.breakpoints.down('md')]: {
+      width: 'calc(50% - 24px)',
+      margin: '0 12px 24px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      margin: '0 0 16px',
+    },
   },
   cardActions: {
     margin: '8px',
@@ -38,52 +52,50 @@ export default function Articles(props) {
   );
 
   const setArticles = () => (
-    (!isInitial ? setSkeleton() : articles).map((item, index) => {
-      return (
-        <Card className={classes.card} key={index}>
-          {item ?
-            <React.Fragment>
-              <Link component={NavLink} to={`${match.url}/${item.id}`}>
-                <CardActionArea>
-                  <CardMedia component="img" alt={item.title} image={item.urlToImage} />
-                  <CardContent>
-                    <Typography gutterBottom>{item.publishedAt}</Typography>
-                    <Typography gutterBottom variant="h5">{item.title}</Typography>
-                    <Typography>{item.description}</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Link>
-              <Divider />
-              <CardActions className={classes.cardActions}>
-                <Chip variant="outlined" label={item.source.name} />
-              </CardActions>
-            </React.Fragment> :
-
-            <React.Fragment>
-              <Box>
-                <Skeleton height="300px" variant="rect" />
+    (!isInitial ? setSkeleton() : articles).map((item, index) => (
+      <Card className={classes.card} key={index}>
+        {item ?
+          <React.Fragment>
+            <Link component={NavLink} to={`${match.url}/${item.id}`}>
+              <CardActionArea>
+                <CardMedia component="img" alt={item.title} image={item.urlToImage} />
                 <CardContent>
-                  <Skeleton width="30%" />
-                  <Box pt={1}>
-                    <Skeleton />
-                    <Skeleton width="60%" />
-                  </Box>
-                  <Box pt={1}>
-                    <Skeleton />
-                    <Skeleton />
-                    <Skeleton width="60%" />
-                  </Box>
+                  <Typography gutterBottom>{item.publishedAt}</Typography>
+                  <Typography gutterBottom variant="h5">{item.title}</Typography>
+                  <Typography>{item.description}</Typography>
                 </CardContent>
-              </Box>
-              <Divider />
-              <CardActions className={classes.cardActions}>
+              </CardActionArea>
+            </Link>
+            <Divider />
+            <CardActions className={classes.cardActions}>
+              <Chip variant="outlined" label={item.source.name} />
+            </CardActions>
+          </React.Fragment> :
+
+          <React.Fragment>
+            <Box>
+              <Skeleton height="300px" variant="rect" />
+              <CardContent>
                 <Skeleton width="30%" />
-              </CardActions>
-            </React.Fragment>
-          }
-        </Card>
-      );
-    })
+                <Box pt={1}>
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </Box>
+                <Box pt={1}>
+                  <Skeleton />
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </Box>
+              </CardContent>
+            </Box>
+            <Divider />
+            <CardActions className={classes.cardActions}>
+              <Skeleton width="30%" />
+            </CardActions>
+          </React.Fragment>
+        }
+      </Card>
+    ))
   );
 
   return (

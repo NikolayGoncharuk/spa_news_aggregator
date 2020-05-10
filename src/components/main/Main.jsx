@@ -13,22 +13,32 @@ const useStyles = makeStyles(theme => ({
   root: {
     paddingTop: '56px',
     paddingBottom: '56px',
+    [theme.breakpoints.down('md')]: {
+      paddingTop: '32px',
+      paddingBottom: '32px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '24px',
+      paddingBottom: '24px',
+    },
   }
 }));
 
-export default function Main() {
+export default function Main(props) {
+  const { navItems: { news, about, help, settings } } = props;
   const classes = useStyles();
+
   return (
     <Container className={classes.root}>
       <Switch>
         <Route exact path="/">
-          <Redirect to='/news' />
+          <Redirect to={news.path} />
         </Route>
-        <Route path='/news' component={NewsPage} />
-        <Route path='/about' component={AboutPage} />
-        <Route path='/help' component={HelpPage} />
-        <Route path='/settings' component={SettingsPage} />
-        <Redirect to='/news' />
+        <Route path={news.path} component={NewsPage} />
+        <Route path={about.path} component={AboutPage} />
+        <Route path={help.path} component={HelpPage} />
+        <Route path={settings.path} component={SettingsPage} />
+        <Redirect to={news.path} />
       </Switch>
     </Container>
   );
