@@ -24,15 +24,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Breadcrumbs() {
+export default function Breadcrumbs(props) {
+  const { navItems } = props;
   const classes = useStyles();
 
-  const breadcrumbNameMap = {
-    '/news': 'Новости',
-    '/about': 'О нас',
-    '/help': 'Помощь',
-    '/settings': 'Настройки',
-  }
+  // Преобразует объект для отображения названия, а не ссылки
+  const breadcrumbNameMap = Object.fromEntries(
+    Object.values(navItems).map(item => [item.path, item.name])
+  );
 
   // Если путь существует делает ссылками все пути кроме последнего, в противном случае возращает null 
   const setPathnames = (pathnames) => {

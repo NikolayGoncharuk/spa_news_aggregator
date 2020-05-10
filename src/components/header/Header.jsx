@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 // Styled Components
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,25 +9,35 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-export default function Header() {
-  const [navItem, setNavItem] = React.useState(0);
+const useStyles = makeStyles(theme => ({
+  navItems: {
+    padding: '20px 30px',
+    minWidth: 0,
+  },
+}));
+
+export default function Header(props) {
+  const { navItems } = props;
+  const classes = useStyles();
+  const [navItemValue, setNavItemValue] = React.useState(0);
 
   const handleNavItem = (event, newValue) => {
-    setNavItem(newValue);
+    setNavItemValue(newValue);
   };
 
-  const NavTab = withStyles(theme => ({
-    root: {
-      padding: '20px 30px',
-      minWidth: 0,
-    },
-  }))(props => (
-    <Tab
-      disableRipple
-      component={NavLink}
-      {...props}
-    />
-  ));
+  const setNavItems = () => (
+    Object.values(navItems).map((item, index) => (
+      <Tab
+        key={index}
+        className={classes.navItems}
+        component={NavLink}
+        to={item.path}
+        label={item.name}
+        disableRipple
+        {...props}
+      />
+    ))
+  );
 
   return (
     <AppBar position="static" color="transparent">
@@ -38,16 +48,13 @@ export default function Header() {
           </Grid>
           <Grid item>
             <Tabs
-              value={navItem}
+              value={navItemValue}
               onChange={handleNavItem}
               indicatorColor="primary"
               textColor="primary"
               centered
             >
-              <NavTab to="/news" label="Новости" />
-              <NavTab to="/about" label="О нас" />
-              <NavTab to="/help" label="Помощь" />
-              <NavTab to="/settings" label="Настройки" />
+              {setNavItems()}
             </Tabs>
           </Grid>
         </Grid>

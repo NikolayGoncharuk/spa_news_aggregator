@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
-import makeTheme from './theme/theme';
+import { makeTheme } from './theme/theme';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // Components
 import Header from './components/header/Header';
@@ -10,7 +10,8 @@ import Main from './components/main/Main';
 import Footer from './components/footer/Footer';
 
 const mapStateToProps = (state) => ({
-  theme: state.theme
+  theme: state.theme,
+  navItems: state.nav.navItems,
 });
 
 export default connect(mapStateToProps, {})(
@@ -19,8 +20,8 @@ export default connect(mapStateToProps, {})(
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Header />
-        <Breadcrumbs />
+        <Header navItems={props.navItems} />
+        <Breadcrumbs navItems={props.navItems} />
         <Main />
         <Footer />
       </ThemeProvider>

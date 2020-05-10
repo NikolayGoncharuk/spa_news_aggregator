@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 // Styled Components
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -21,26 +21,49 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ContactItem = withStyles({})(props => (
-  <ListItem>
-    <ListItemIcon>
-      {props.icon}
-    </ListItemIcon>
-    <ListItemText
-      primary={props.primary}
-      secondary={props.secondary}
-    />
-  </ListItem>
-));
-
 export default function AboutPage() {
   const classes = useStyles();
+
+  const contactsItems = [
+    {
+      primary: 'Адрес:',
+      secondary: 'г. Хабаровск, ул. Шимановская',
+      icon: <MapIcon />,
+    },
+    {
+      primary: 'Эл. почта:',
+      secondary: 'goncharuk.bro@yandex.ru',
+      icon: <MailIcon />,
+    },
+    {
+      primary: 'Телефон:',
+      secondary: '+7 (914) 408-84-69',
+      icon: <PhoneIcon />,
+    },
+  ];
+
+  const setContactsItems = () => (
+    contactsItems.map((item, index) => (
+      <React.Fragment>
+        <ListItem key={index}>
+          <ListItemIcon>
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText
+            primary={item.primary}
+            secondary={item.secondary}
+          />
+        </ListItem>
+        {(index + 1 < contactsItems.length) && <Divider variant="inset" component="li" />}
+      </React.Fragment>
+    ))
+  );
 
   return (
     <div>
       <Grid container spacing={3}>
         <Grid item xs>
-          <Typography gutterBottom={true}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor eget dolor morbi non arcu risus. Risus ultricies tristique nulla aliquet enim tortor at auctor urna. Convallis posuere morbi leo urna molestie at elementum eu facilisis. Congue eu consequat ac felis. Egestas sed sed risus pretium quam. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Amet nulla facilisi morbi tempus iaculis urna. Urna neque viverra justo nec. A erat nam at lectus urna duis. Nibh praesent tristique magna sit.</Typography>
+          <Typography gutterBottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor eget dolor morbi non arcu risus. Risus ultricies tristique nulla aliquet enim tortor at auctor urna. Convallis posuere morbi leo urna molestie at elementum eu facilisis. Congue eu consequat ac felis. Egestas sed sed risus pretium quam. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Amet nulla facilisi morbi tempus iaculis urna. Urna neque viverra justo nec. A erat nam at lectus urna duis. Nibh praesent tristique magna sit.</Typography>
           <Typography>Amet est placerat in egestas erat imperdiet sed euismod nisi. Elementum curabitur vitae nunc sed velit dignissim sodales. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Venenatis urna cursus eget nunc.</Typography>
         </Grid>
         <Grid item xs>
@@ -55,23 +78,7 @@ export default function AboutPage() {
           <Typography gutterBottom variant="h4">Контакты</Typography>
           <Divider />
           <List>
-            <ContactItem
-              icon={<MapIcon />}
-              primary="Адрес:"
-              secondary="г. Хабаровск, ул. Шимановская"
-            />
-            <Divider variant="inset" component="li" />
-            <ContactItem
-              icon={<MailIcon />}
-              primary="Эл. почта:"
-              secondary="goncharuk.bro@yandex.ru"
-            />
-            <Divider variant="inset" component="li" />
-            <ContactItem
-              icon={<PhoneIcon />}
-              primary="Телефон:"
-              secondary="+7 (914) 408-84-69"
-            />
+            {setContactsItems()}
           </List>
         </Grid>
       </Grid>
