@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getLatestArticles, setSearchValue, setDate } from '../../../../../model/reducers/newsReducer';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 // Styled Components
 import Box from '@material-ui/core/Box';
 // Components
 import SearchWidget from './search-widget/SearchWidget';
 import DateWidget from './date-widget/DateWidget';
+import LatestArticles from './latest-articles/LatestArticles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,23 +26,38 @@ const Widget = withStyles(theme => ({
   root: { paddingBottom: '48px' },
 }))(props => <Box {...props} />);
 
-export default function Sidebar(props) {
-  const classes = useStyles();
+const mapStateToProps = (state) => ({
+  latestArticles: state.news.latestArticles,
+});
 
-  return (
-    <aside className={classes.root}>
-      <Widget>
-        <SearchWidget
-          searchValue={props.newsParams.searchValue}
-          setSearchValue={props.setSearchValue}
-        />
-      </Widget>
-      <Widget>
-        <DateWidget
-          date={props.newsParams.date}
-          setDate={props.setDate}
-        />
-      </Widget>
-    </aside >
-  );
-};
+export default connect(mapStateToProps, { getLatestArticles, setSearchValue, setDate })(
+  function Sidebar(props) {
+    const { latestArticles, getLatestArticles, setSearchValue, setDate, newsParams, isInitial } = props;
+    const classes = useStyles();
+
+    return (
+      <aside className={classes.root}>
+        <Widget>
+          <SearchWidget
+            searchValue={newsParams.searchValue}
+            setSearchValue={setSearchValue}
+          />
+        </Widget>
+        <Widget>
+          <DateWidget
+            date={newsParams.date}
+            setDate={setDate}
+          />
+        </Widget>
+        <Widget>
+          <LatestArticles
+            isInitial={isInitial}
+            newsParams={newsParams}
+            latestArticles={latestArticles}
+            getLatestArticles={getLatestArticles}
+          />
+        </Widget>
+      </aside >
+    );
+  }
+);

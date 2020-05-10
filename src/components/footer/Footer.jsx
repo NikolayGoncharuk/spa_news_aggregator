@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: '16px',
   },
   copyright: {
-    paddingTop: '12px',
-    paddingBottom: '12px',
+    paddingTop: '16px',
+    paddingBottom: '16px',
     textAlign: 'center',
     boxShadow: theme.shadows[4],
   }

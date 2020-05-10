@@ -17,6 +17,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 const useStyles = makeStyles(theme => ({
   datePicker: {
     marginTop: '16px',
+    width: '100%',
   },
   datePickerIcon: {
     marginRight: '16px',
@@ -79,7 +80,7 @@ export default function DateWidget(props) {
         <MuiPickersUtilsProvider utils={localizedUtils} locale={ruLocale}>
           <DatePicker
             className={classes.datePicker}
-            showTodayButton={true}
+            showTodayButton
             format="d MMMM yyyy"
             minDate={new Date().setDate(new Date().getDate() - 31)}
             maxDate={new Date()}

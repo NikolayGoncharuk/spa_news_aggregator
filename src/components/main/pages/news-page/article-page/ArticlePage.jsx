@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect, useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import { getArticle } from '../../../../../model/reducers/newsReducer';
 // Styled Components
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -45,67 +47,86 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PostPage(props) {
-  const { articles } = props;
-  const classes = useStyles();
-  let params = useParams();
+const mapStateToProps = (state) => ({
+  article: state.news.currentArticle,
+  navItems: state.nav.navItems,
+});
 
-  const [postData, setPostData] = useState(null);
-  const [open, setOpen] = useState(false);
+export default connect(mapStateToProps, { getArticle })(
+  function PostPage(props) {
+    const { article, getArticle, newsParams, navItems: { news } } = props;
+    const classes = useStyles();
+    let params = useParams();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleOpen = () => {
-    setOpen(true);
-  };
+    const [isInitial, setIsInitial] = React.useState(false);
+    const [redirect, setRedirect] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setPostData(articles.find(item => (
-      (+item.id === +params.articleId)
-    )));
-  }, []);
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
 
-  if (!postData) {
+    // Следит за изменением настроек, если настройки изменились, перенаправляет на страницу новостей
+    React.useEffect(() => {
+      if (isInitial) {
+        setRedirect(true);
+      };
+    }, [newsParams]);
+
+    // Делает запрос на получение новости
+    React.useEffect(() => {
+      window.scrollTo(0, 0);
+      const fetch = async () => {
+        setIsInitial(false);
+        await getArticle(params.articleId);
+        setIsInitial(true);
+      };
+      fetch();
+    }, [params.articleId]);
+
+    if (redirect) {
+      return <Redirect to={news.path} />;
+    };
+
+    if (!isInitial) {
+      return (
+        <div className={classes.progressWrapper}>
+          <CircularProgress
+            color="inherit"
+            className={classes.progress}
+          />
+        </div>
+      );
+    };
+
     return (
-      <div className={classes.progressWrapper}>
-        <CircularProgress
-          color="inherit"
-          className={classes.progress}
-        />
+      <div>
+        <Typography gutterBottom variant="h4">{article.title}</Typography>
+        <Typography gutterBottom>{article.publishedAt}</Typography>
+        <Divider />
+        <div className={classes.content}>
+          <Paper
+            component="img"
+            className={classes.img}
+            src={article.urlToImage}
+            alt={article.title}
+            onClick={handleOpen}
+          />
+          <Typography>{article.description}</Typography>
+        </div>
+        <div className={classes.divider} />
+        <Divider />
+        <div className={classes.tagsWraper}>
+          <Chip component={Link} href={article.url} target="_blanc" variant="outlined" label={article.source.name} />
+        </div>
+        <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+          <Paper
+            component="img"
+            className={classes.backdropImg}
+            src={article.urlToImage}
+            alt={article.title}
+          />
+        </Backdrop>
       </div>
     );
-  };
-
-  return (
-    <div>
-      <Typography gutterBottom variant="h4">{postData.title}</Typography>
-      <Typography gutterBottom>{postData.publishedAt}</Typography>
-      <Divider />
-      <div className={classes.content}>
-        <Paper
-          component="img"
-          className={classes.img}
-          src={postData.urlToImage}
-          alt={postData.title}
-          onClick={handleOpen}
-        />
-        <Typography>{postData.description}</Typography>
-      </div>
-      <div className={classes.divider} />
-      <Divider />
-      <div className={classes.tagsWraper}>
-        <Chip component={Link} href={postData.url} target="_blanc" variant="outlined" label={postData.source.name} />
-      </div>
-      <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-        <Paper
-          component="img"
-          className={classes.backdropImg}
-          src={postData.urlToImage}
-          alt={postData.title}
-        />
-      </Backdrop>
-    </div>
-  );
-};
+  }
+);

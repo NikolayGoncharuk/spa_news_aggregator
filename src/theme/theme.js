@@ -40,8 +40,5 @@ export const makeTheme = (props) => createMuiTheme({
       color: 'textPrimary',
       underline: 'none',
     },
-    MuiSkeleton: {
-      animation: 'wave',
-    },
   },
 });

@@ -31,9 +31,6 @@ export default function Main(props) {
   return (
     <Container className={classes.root}>
       <Switch>
-        <Route exact path="/">
-          <Redirect to={news.path} />
-        </Route>
         <Route path={news.path} component={NewsPage} />
         <Route path={about.path} component={AboutPage} />
         <Route path={help.path} component={HelpPage} />

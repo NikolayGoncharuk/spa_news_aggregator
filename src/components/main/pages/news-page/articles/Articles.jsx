@@ -68,7 +68,7 @@ export default function Articles(props) {
             </Link>
             <Divider />
             <CardActions className={classes.cardActions}>
-              <Chip variant="outlined" label={item.source.name} />
+              <Chip component={Link} href={item.url} target="_blanc" variant="outlined" label={item.source.name} />
             </CardActions>
           </React.Fragment> :
 

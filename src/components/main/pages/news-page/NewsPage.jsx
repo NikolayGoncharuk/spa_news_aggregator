@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import { getNewsResponse, setSearchValue, setDate } from '../../../../model/reducers/newsReducer';
+import { getArticles, getLatestArticles } from '../../../../model/reducers/newsReducer';
 // Styled Components
 import Grid from '@material-ui/core/Grid';
 // Components
@@ -11,20 +11,22 @@ import ProgressButton from './progress-button/ProgressButton';
 import Sidebar from './sidebar/Sidebar';
 
 const mapStateToProps = (state) => ({
-  articles: state.news.newsResponse.articles,
+  articles: state.news.articles,
   newsParams: state.news.newsParams,
+  latestArticles: state.news.latestArticles,
 });
 
-export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDate })(
+export default connect(mapStateToProps, { getArticles, getLatestArticles })(
   function NewsPage(props) {
-    const { articles, getNewsResponse, newsParams, setSearchValue, setDate } = props;
+    const { articles, getArticles, newsParams } = props;
     const match = useRouteMatch();
     const [isInitial, setIsInitial] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
       const fetch = async () => {
-        await getNewsResponse(newsParams);
+        setIsInitial(false);
+        await getArticles(newsParams);
         setIsInitial(true);
       };
       fetch();
@@ -34,7 +36,7 @@ export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDa
     const getPage = async () => {
       setLoading(true);
       const page = articles.length / newsParams.pageSize + 1;
-      await getNewsResponse({ ...newsParams, page });
+      await getArticles({ ...newsParams, page });
       setLoading(false);
     };
 
@@ -56,15 +58,14 @@ export default connect(mapStateToProps, { getNewsResponse, setSearchValue, setDa
               />
             </Route>
             <Route path={`${match.path}/:articleId`}>
-              <ArticlePage articles={articles} />
+              <ArticlePage newsParams={newsParams} />
             </Route>
           </Switch>
         </Grid>
         <Grid item xs md={3}>
           <Sidebar
             newsParams={newsParams}
-            setSearchValue={setSearchValue}
-            setDate={setDate}
+            isInitial={isInitial}
           />
         </Grid>
       </Grid>
