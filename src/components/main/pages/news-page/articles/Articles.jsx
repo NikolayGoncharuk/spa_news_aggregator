@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Masonry from 'react-masonry-component';
+import Masonry from './Masonry';
 // Styled Components
 import Skeleton from '@material-ui/lab/Skeleton';
 import Card from '@material-ui/core/Card';
@@ -26,16 +26,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   card: {
-    width: 'calc(50% - 32px)',
-    margin: '0 16px 32px',
-    [theme.breakpoints.down('md')]: {
-      width: 'calc(50% - 24px)',
-      margin: '0 12px 24px',
-    },
-    [theme.breakpoints.down('xs')]: {
-      width: '100%',
-      margin: '0 0 16px',
-    },
+    width: '100%',
   },
   cardActions: {
     margin: '8px',
@@ -99,7 +90,7 @@ export default function Articles(props) {
   );
 
   return (
-    <Masonry className={classes.masonry}>
+    <Masonry cxs={1} cmd={2} className={classes.masonry}>
       {setArticles()}
     </Masonry>
   );
