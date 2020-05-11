@@ -4,7 +4,7 @@ const SET_DARK_MODE = 'theme/SET_DARK_MODE';
 const SET_FONT_SIZE = 'theme/SET_FONT_SIZE';
 
 const initialState = {
-  darkMode: true,
+  darkMode: false,
   typography: {
     fontSize: 14
   }

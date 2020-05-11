@@ -34,7 +34,7 @@ export default function SearchWidget(props) {
     <Paper elevation={4} component="form">
       <InputBase
         className={classes.input}
-        placeholder="Поиск..."
+        placeholder="Поиск по слову или фразе..."
         onChange={handleSearchValue}
         value={localSearchValue}
       />
