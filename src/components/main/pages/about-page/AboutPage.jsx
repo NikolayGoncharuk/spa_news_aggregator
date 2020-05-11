@@ -62,7 +62,7 @@ export default function AboutPage() {
   return (
     <div>
       <Grid container spacing={3}>
-        <Grid item xs>
+        <Grid item xs={12} md={6}>
           <Typography gutterBottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor eget dolor morbi non arcu risus. Risus ultricies tristique nulla aliquet enim tortor at auctor urna. Convallis posuere morbi leo urna molestie at elementum eu facilisis. Congue eu consequat ac felis. Egestas sed sed risus pretium quam. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Amet nulla facilisi morbi tempus iaculis urna. Urna neque viverra justo nec. A erat nam at lectus urna duis. Nibh praesent tristique magna sit.</Typography>
           <Typography>Amet est placerat in egestas erat imperdiet sed euismod nisi. Elementum curabitur vitae nunc sed velit dignissim sodales. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Venenatis urna cursus eget nunc.</Typography>
         </Grid>
@@ -71,7 +71,7 @@ export default function AboutPage() {
         </Grid>
       </Grid>
       <Grid container spacing={3} className={classes.contacts}>
-        <Grid item xs>
+        <Grid item xs={12} md={8}>
           <Map />
         </Grid>
         <Grid item xs>

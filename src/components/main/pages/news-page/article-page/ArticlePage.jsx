@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     float: 'left',
     marginRight: '24px',
     marginBottom: '24px',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
   tagsWraper: {
     marginTop: '24px',
