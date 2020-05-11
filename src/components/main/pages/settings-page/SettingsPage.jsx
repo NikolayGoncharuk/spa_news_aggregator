@@ -40,7 +40,7 @@ export default connect(mapStateToProps, { saveSettings })(
     // Значение настроек по умолчанию
     const defaultPageSize = 10;
     const defaultFontSize = 14;
-    const defaultDarkMode = true;
+    const defaultDarkMode = false;
 
     // Изменение локальных значений настроек
     const handlePageSize = (event, newValue) => {
@@ -105,7 +105,14 @@ export default connect(mapStateToProps, { saveSettings })(
             />
           </Grid>
           <Grid item>
-            <Button disabled={localPageSize === defaultPageSize && localFontSize === defaultFontSize && localDarkMode === defaultDarkMode} color="secondary" onClick={resetSettings}>Сбросить</Button>
+            <Button disabled={
+              (localPageSize === defaultPageSize) &&
+              (localFontSize === defaultFontSize) &&
+              (localDarkMode === defaultDarkMode)
+            }
+              color="secondary"
+              onClick={resetSettings}
+            >Сбросить</Button>
           </Grid>
         </Grid>
       </div >
