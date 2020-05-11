@@ -26,35 +26,33 @@ export default function LatestArticles(props) {
     fetch();
   }, [maxArticlesLength]);
 
-  const setLatestArticles = ((!isInitial && loading) ? Array.from(new Array(maxArticlesLength)) : articles).map((item, index) => {
-    return (
-      <React.Fragment key={index}>
-        {item ?
-          <Link component={NavLink} to={`${match.url}/${item.id}`}>
-            <ListItem button alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt={item.title} src={item.urlToImage} />
-              </ListItemAvatar>
-              <ListItemText primary={item.title} />
-            </ListItem>
-          </Link> :
+  const setLatestArticles = ((!isInitial && loading) ? Array.from(new Array(maxArticlesLength)) : articles).map((item, index) => (
+    <React.Fragment key={index}>
+      {item ?
+        <Link component={NavLink} to={`${match.url}/${item.id}`}>
+          <ListItem button alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt={item.title} src={item.urlToImage} />
+            </ListItemAvatar>
+            <ListItemText primary={item.title} />
+          </ListItem>
+        </Link> :
 
-          <Link>
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Skeleton variant="circle" width={40} height={40} />
-              </ListItemAvatar>
-              <Box pt={0.5} width="100%">
-                <Skeleton />
-                <Skeleton width="60%" />
-              </Box>
-            </ListItem>
-          </Link>
-        }
-        {index + 1 !== maxArticlesLength ? <Divider variant="inset" component="li" /> : <React.Fragment />}
-      </React.Fragment >
-    )
-  });
+        <Link>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Skeleton variant="circle" width={40} height={40} />
+            </ListItemAvatar>
+            <Box pt={0.5} width="100%">
+              <Skeleton />
+              <Skeleton width="60%" />
+            </Box>
+          </ListItem>
+        </Link>
+      }
+      {index + 1 !== maxArticlesLength ? <Divider variant="inset" component="li" /> : <React.Fragment />}
+    </React.Fragment >
+  ));
 
   return (
     <div>

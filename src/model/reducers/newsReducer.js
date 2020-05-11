@@ -21,7 +21,7 @@ const initialState = {
   },
   latestArticles: {
     articles: [],
-    maxArticlesLength: 3,
+    maxArticlesLength: 5,
   },
 };
 
@@ -33,10 +33,11 @@ export default function newsReducer(state = initialState, action) {
         articles: action.data.articles,
       };
     case PUSH_ARTICLES:
-      action.data.articles.forEach(item => {
-        state.articles.push(item);
-      });
-      return { ...state };
+      return {
+        ...state,
+        articles: [...state.articles]
+          .concat(action.data.articles),
+      };
     case SET_CURRENT_ARTICLE:
       return {
         ...state,
@@ -64,12 +65,14 @@ export default function newsReducer(state = initialState, action) {
         }
       };
     case SET_LATEST_ARTICLES:
-      for (let i = 0; i < state.latestArticles.maxArticlesLength; i++) {
-        state.latestArticles.articles.push(action.data.articles[i]);
-      };
       return {
         ...state,
-        latestArticles: { ...state.latestArticles },
+        latestArticles: {
+          ...state.latestArticles,
+          articles: action.data.articles.filter((item, index) => (
+            index < state.latestArticles.maxArticlesLength
+          )),
+        },
       };
     default:
       return state;
