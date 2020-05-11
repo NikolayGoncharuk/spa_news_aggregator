@@ -1,6 +1,6 @@
 import * as axios from 'axios';
 
-axios.defaults.baseURL = 'http://newsapi.org/v2';
+axios.defaults.baseURL = 'https://newsapi.org/v2';
 const apiKey = 'd88047b435d14b96b9b1b5e9f16920de';
 
 export const newsAPI = {

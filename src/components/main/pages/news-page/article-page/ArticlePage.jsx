@@ -4,13 +4,15 @@ import { Redirect, useParams } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { getArticle } from '../../../../../model/reducers/newsReducer';
 // Styled Components
+import Skeleton from '@material-ui/lab/Skeleton';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -87,45 +89,74 @@ export default connect(mapStateToProps, { getArticle })(
       return <Redirect to={news.path} />;
     };
 
-    if (!isInitial) {
-      return (
-        <div className={classes.progressWrapper}>
-          <CircularProgress
-            color="inherit"
-            className={classes.progress}
-          />
-        </div>
-      );
+    const setArticle = () => {
+      if (isInitial) {
+        return (
+          <React.Fragment>
+            <Typography gutterBottom variant="h4">{article.title}</Typography>
+            <Typography gutterBottom>{article.publishedAt}</Typography>
+            <Divider />
+            <div className={classes.content}>
+              <Paper
+                component="img"
+                className={classes.img}
+                src={article.urlToImage}
+                alt={article.title}
+                onClick={handleOpen}
+              />
+              <Typography>{article.description}</Typography>
+            </div>
+            <div className={classes.divider} />
+            <Divider />
+            <div className={classes.tagsWraper}>
+              <Chip component={Link} href={article.url} target="_blanc" variant="outlined" label={article.source.name} />
+            </div>
+            <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+              <Paper
+                component="img"
+                className={classes.backdropImg}
+                src={article.urlToImage}
+                alt={article.title}
+              />
+            </Backdrop>
+          </React.Fragment>
+        );
+      } else {
+        return (
+          <React.Fragment>
+            <Box pb={2}>
+              <Skeleton component={Typography} gutterBottom variant="h4" width="60%" />
+              <Skeleton width="15%" />
+            </Box>
+            <Divider />
+            <Box pt={3} pb={3} component={Grid} container>
+              <Grid item xs>
+                <Skeleton
+                  width="100%"
+                  height="250px"
+                  variant="rect"
+                />
+              </Grid>
+              <Box pl={3} component={Grid} item xs>
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton width="60%" />
+              </Box>
+            </Box>
+            <Divider />
+            <Box pt={2}>
+              <Skeleton width="15%" />
+            </Box>
+          </React.Fragment>
+        );
+      };
     };
 
     return (
       <div>
-        <Typography gutterBottom variant="h4">{article.title}</Typography>
-        <Typography gutterBottom>{article.publishedAt}</Typography>
-        <Divider />
-        <div className={classes.content}>
-          <Paper
-            component="img"
-            className={classes.img}
-            src={article.urlToImage}
-            alt={article.title}
-            onClick={handleOpen}
-          />
-          <Typography>{article.description}</Typography>
-        </div>
-        <div className={classes.divider} />
-        <Divider />
-        <div className={classes.tagsWraper}>
-          <Chip component={Link} href={article.url} target="_blanc" variant="outlined" label={article.source.name} />
-        </div>
-        <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-          <Paper
-            component="img"
-            className={classes.backdropImg}
-            src={article.urlToImage}
-            alt={article.title}
-          />
-        </Backdrop>
+        {setArticle()}
       </div>
     );
   }
